@@ -1,27 +1,22 @@
 import nltk
 from nltk.chat.util import Chat, reflections
 
-pairs = [
-    [r"hi|hello|hey", ["Hello!", "Hey there!", "Hi! How can I help you?"]],
-    [r"how are you", ["I'm good, thanks for asking!", "I'm doing great!"]],
-    [r"what is your name", ["I am a simple chatbot.", "You can call me ChatBot!"]],
-    # Removed "bye" from pairs to prevent duplicate messages
-]
-
-chatbot = Chat(pairs, reflections)
-
-print("Hello! I'm your chatbot. Type 'bye' to exit.")
+responses = {
+    "hello": "Hi! How can I help you?",
+    "how are you": "I'm good, thanks for asking!",
+    "what is your name": "I am a simple chatbot.",
+    "bye": "Goodbye! Have a nice day!"
+}
 
 while True:
-    user_input = input("You: ").lower()
+    user_input = input("You: ").strip().lower()
 
-    if user_input in ["bye", "goodbye"]:
-        print("Chatbot: Goodbye! Have a nice day!")  # Prints only ONE goodbye message
-        break  # Exits immediately
-
-    response = chatbot.respond(user_input)
-
-    if response:
-        print("Chatbot:", response)
+    if user_input in responses:
+        print(f"Chatbot: {responses[user_input]}")
+    elif user_input == "":  # Handle empty inputs
+        print("Chatbot: Please say something.")
     else:
         print("Chatbot: I don't understand that.")
+
+    if user_input == "bye":
+        break
